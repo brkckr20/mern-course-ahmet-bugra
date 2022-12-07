@@ -71,8 +71,39 @@ baglanti.connect(function (err) {
     }) */
 
     /* select sorgusu */
-    baglanti.query(`SELECT * FROM OGRENCILER`, function (err, result, fields) {
+    /* baglanti.query(`SELECT * FROM OGRENCILER`, function (err, result, fields) {
         if (err) throw err;
         console.log(fields);
-    });
+    }); */
+
+    /* where şartı ile sorgulama */
+    /* baglanti.query(`SELECT * FROM OGRENCILER WHERE NAME LIKE '%o%'`, function (err, result, fields) {
+        if (err) throw err;
+        console.log(result);
+    }); */
+
+
+    /* ? İŞARETİ KULLANARAK WHERE ŞARTI KULLANMA */
+    // var isim = "burak";
+    // var adres = "denizli";
+    // var sorgu = "SELECT * FROM OGRENCILER WHERE NAME = ? AND ADRESS = ?";
+    // baglanti.query(sorgu, [isim, adres], function (err, result) {
+    //     if (err) throw err;
+    //     console.log(result);
+    // });
+
+
+    //SİLME İŞLEMİ
+    // var sorgu = "DELETE FROM OGRENCILER WHERE ID = 3";
+    // baglanti.query(sorgu, (err, result) => {
+    //     console.log("Silme işlemi başarılı")
+    //     console.log(result)
+    // })
+
+    //update İŞLEMİ
+    var sorgu = "UPDATE OGRENCILER SET TCNO = '12121212121' WHERE ID = 1";
+    baglanti.query(sorgu, (err, result) => {
+        console.log("Güncelleme işlemi başarılı")
+        console.log(result)
+    })
 })
