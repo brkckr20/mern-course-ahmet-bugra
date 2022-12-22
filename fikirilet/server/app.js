@@ -1,10 +1,21 @@
 const express = require("express");
 const cors = require("cors");
+const mongoose = require("mongoose")
 const app = express();
-// const bodyParser = require("body-parser");
+
+//model import
+const Fikir = require("./models/Fikir");
 
 app.use(cors());
 app.use(express.json());
+
+mongoose.set('strictQuery', true);
+
+
+mongoose.connect("mongodb://localhost:27017/fikirilet", (err) => {
+    if (err) throw err;
+    console.log("Db connection");
+});
 
 
 app.get("/kullanici", (req, res) => {
@@ -15,11 +26,18 @@ app.get("/kullanici", (req, res) => {
     )
 });
 
-app.post("/fikirkaydet", (req, res) => {
-    console.log(req.body);
-    res.send(req.body)
+app.post("/fikirkaydet", async (req, res) => {
+    const { adSoyad, email, fikirTuru, aciklama } = req.body;
+    await Fikir.create({
+        isim: adSoyad,
+        email,
+        tur: fikirTuru,
+        fikir: aciklama
+    }, err => {
+        if (err) throw err;
+        console.log("Fikir Kaydedildi.");
+    })
 })
 
-// app.post()
 
 app.listen(3001)
