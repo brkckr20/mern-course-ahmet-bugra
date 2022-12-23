@@ -3,24 +3,12 @@ import axios from 'axios';
 
 function App() {
 
-  // const [message, setMessage] = useState({
-  //   adSoyad: "",
-  //   email: "",
-  //   fikirTuru: "",
-  //   aciklama: "",
-  // });
-
-  // const handleChange = (e) => {
-  //   setMessage({
-  //     [e.target.name]: e.target.value
-  //   })
-  // }
-
-
   const [adSoyad, setAdSoyad] = useState("")
   const [email, setEmail] = useState("")
   const [fikirTuru, setfikirTuru] = useState("")
   const [aciklama, setAciklama] = useState("")
+  const [alert, setAlert] = useState("hidden")
+  const [alertErr, setAlertErr] = useState("hidden")
 
   const values = {
     adSoyad,
@@ -29,15 +17,33 @@ function App() {
     aciklama
   }
 
-  const handleFormSubmit = async (e) => {
+  const handleFormSubmit = (e) => {
     e.preventDefault();
-    const res = await axios.post(`http://localhost:3001/fikirkaydet`, values);
-    console.log(res);
+    axios.post(`http://localhost:3001/fikirkaydet`, values)
+      .then(res => {
+        setAlert("block");
+        setTimeout(() => {
+          setAlert("hidden");
+        }, 4000);
+      })
+      .catch(err => {
+        setAlertErr("block");
+        setTimeout(() => {
+          setAlertErr("hidden");
+        }, 4000);
+      })
+
   }
   return (
     <div>
       <h1 className='text-center text-3xl font-semibold mb-5'>Fikir Ilet Uygulamasi</h1>
-      <div className='mx-auto w-1/4'>
+      <div className={`text-center mb-2 relative ${alert}`}>
+        <h1 className='inline-flex bg-green-500 w-1/4 justify-center text-white'>Kayıt İşlemi Başarılı</h1>
+      </div>
+      <div className={`text-center mb-2 relative ${alertErr}`}>
+        <h1 className='inline-flex bg-red-500 w-1/4 justify-center text-white'>Kayıt işlemi başarısız!</h1>
+      </div>
+      <div className='mx-auto w-1/2 md:w-1/4'>
         <form onSubmit={handleFormSubmit}>
           <input value={adSoyad} name="adSoyad" onChange={(e) => setAdSoyad(e.target.value)} className='p-2 border border-gray-300 pl-1 rounded w-full mb-1' placeholder='Ad soyad' type="text" />
           <input value={email} name="email" onChange={(e) => setEmail(e.target.value)} className='p-2 border border-gray-300 pl-1 rounded w-full mb-1' placeholder='e-mail adresi' type="email" />

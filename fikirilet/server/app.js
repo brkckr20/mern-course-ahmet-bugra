@@ -34,8 +34,8 @@ app.post("/fikirkaydet", async (req, res) => {
         tur: fikirTuru,
         fikir: aciklama
     }, err => {
-        if (err) throw err;
-        console.log("Fikir Kaydedildi.");
+        if (err) res.sendStatus(400);
+        res.sendStatus(200);
     })
 })
 
