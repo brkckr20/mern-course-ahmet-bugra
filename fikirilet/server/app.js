@@ -5,6 +5,7 @@ const app = express();
 
 //model import
 const Fikir = require("./models/Fikir");
+const Admin = require("./models/Admin");
 
 app.use(cors());
 app.use(express.json());
@@ -39,5 +40,22 @@ app.post("/fikirkaydet", async (req, res) => {
     })
 })
 
+app.post("/giris", async (req, res) => {
+    const { username, password } = req.body;
+
+})
+
+
+// app.post("/adminolustur", async (req, res) => {
+//     const { username, password } = req.body;
+//     try {
+//         const resp = await Admin.create({
+//             username, password
+//         })
+//         res.send(resp);
+//     } catch (error) {
+
+//     }
+// })
 
 app.listen(3001)
