@@ -42,6 +42,11 @@ app.post("/fikirkaydet", async (req, res) => {
 
 app.post("/giris", async (req, res) => {
     const { username, password } = req.body;
+    Admin.find({ username }).then((doc) => {
+        if (doc[0].password === password) {
+            res.send("basarili")
+        }
+    });
 
 })
 

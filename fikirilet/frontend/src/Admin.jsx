@@ -9,7 +9,9 @@ const Admin = () => {
     const handleLogin = async e => {
         e.preventDefault();
         const { data } = await axios.post("http://localhost:3001/giris", { username, password })
-        console.log(data);
+        if (data == 'basarili') {
+            alert("basarili giris")
+        }
     }
     return (
         <div className='mx-10'>
